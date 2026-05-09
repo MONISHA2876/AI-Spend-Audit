@@ -4,9 +4,9 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col bg-black ">
       <main className="flex-1 flex flex-col items-center justify-center text-center">
-        <h1 className="text-9xl font-bold">Find Hidden AI</h1>
+        <h1 className="text-9xl font-bold mt-28">Find Hidden AI</h1>
         <h1 className="text-9xl font-bold">Subscription Waste</h1>
         <Link href="/audit" className="mt-8">
           <button

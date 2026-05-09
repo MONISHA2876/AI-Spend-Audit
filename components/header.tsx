@@ -46,7 +46,7 @@ export default function Header() {
             border border-white/10
             text-sm font-medium text-gray-200
             backdrop-blur-md
-            hover:bg-white/20
+            hover:bg-yellow-500/40
             hover:text-white
             transition-all duration-300
             shadow-lg"

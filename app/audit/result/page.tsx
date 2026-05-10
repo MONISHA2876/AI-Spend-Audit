@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import HeroSection from "@/components/audit/HeroSection";
+import AuditCard from "@/components/audit/AuditCard";
 import { useEffect, useState } from "react";
 import { auditTools } from "@/components/audit/AuditLogic";
 import { AuditResult, AuditSummary, AuditData } from "@/constants/types";
@@ -64,14 +65,17 @@ export default function ResultPage() {
             <h1 className="text-4xl font-bold text-white mb-1">
               Audit Results
             </h1>
-            <p className="text-sm text-gray-300 mb-6">
+            <p className="text-sm text-gray-500 mb-12">
               Based on your current AI tooling configuration
             </p>
 
             <HeroSection summary={summary} />
 
             {isOptimized ? (
-              <div className="rounded-2xl border border-white/30 bg-white/5 p-6 mb-6 text-center">
+              <div
+                className="rounded-2xl border border-white/30 bg-white/5 p-6 mt-10 text-center transition-all duration-200
+        hover:bg-white/9"
+              >
                 <div className="w-10 h-10 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mx-auto mb-4">
                   <span className="text-emerald-400 text-lg">✓</span>
                 </div>
@@ -86,6 +90,23 @@ export default function ResultPage() {
               </div>
             ) : (
               <></>
+            )}
+
+            {summary.results.length > 0 && (
+              <div>
+                <p className="text-xs my-10  font-medium text-gray-500 uppercase tracking-widest mb-3 ">
+                  Tool Breakdown — {summary.results.length} tool
+                  {summary.results.length !== 1 ? "s" : ""} audited
+                </p>
+                <div className="grid grid-cols-1 xl:grid-cols-2 mt-4 gap-4">
+                  {summary.results.map((result) => (
+                    <AuditCard
+                      key={`${result.toolName}-${result.currentPlan}`}
+                      result={result}
+                    />
+                  ))}
+                </div>
+              </div>
             )}
           </div>
         </div>

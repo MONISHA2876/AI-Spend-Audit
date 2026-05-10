@@ -10,7 +10,10 @@ export default function HeroSection({ summary }: { summary: AuditSummary }) {
         : "Well Optimized Stack";
 
   return (
-    <div className="rounded-2xl border border-white/30 bg-white/5 p-6 mb-6">
+    <div
+      className="rounded-2xl border border-white/30 transition-all duration-200
+        hover:bg-white/9 bg-white/5 p-6 mb-6"
+    >
       <p className="text-sm font-medium text-gray-300 uppercase tracking-widest mb-4">
         Audit Summary
       </p>

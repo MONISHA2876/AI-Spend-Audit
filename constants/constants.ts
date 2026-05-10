@@ -9,6 +9,40 @@ export const NAV_ITEMS: { href: string; label: string }[] = [
   { href: "/faq", label: "FAQ" },
 ];
 
+export const severityConfig: Record<
+  string,
+  { label: string; dot: string; border: string }
+> = {
+  high: {
+    label: "High",
+    dot: "bg-red-400",
+    border: "border-red-500/40",
+  },
+  moderate: {
+    label: "Moderate",
+    dot: "bg-yellow-400",
+    border: "border-yellow-500/40",
+  },
+  low: {
+    label: "Low",
+    dot: "bg-blue-400",
+    border: "border-blue-500/60",
+  },
+  ok: {
+    label: "Optimized",
+    dot: "bg-emerald-400",
+    border: "border-white/30",
+  },
+};
+
+export const actionLabel: Record<string, string> = {
+  "downgrade-plan": "Downgrade Plan",
+  "switch-tool": "Switch Tool",
+  "switch-to-api": "Consider API Billing",
+  "reduce-seats": "Reduce Seats",
+  optimized: "No Action Needed",
+};
+
 export const TOOL_CONFIG: Record<string, ToolConfig> = {
   Cursor: {
     plans: [

@@ -24,6 +24,7 @@ export default function ResultPage() {
     const toolsArray = Object.values(toolsMap);
 
     if (toolsArray.length === 0) {
+      alert("Please add at least one tool to start."); //ye do baar kyu aa raha hai o_O
       router.push("/audit");
       return;
     }
@@ -35,6 +36,7 @@ export default function ResultPage() {
     setSummary(result);
   }, [router]);
 
+  //handling fallback when user lands directly on result page without going through audit page
   if (!summary) {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center">
@@ -67,6 +69,24 @@ export default function ResultPage() {
             </p>
 
             <HeroSection summary={summary} />
+
+            {isOptimized ? (
+              <div className="rounded-2xl border border-white/30 bg-white/5 p-6 mb-6 text-center">
+                <div className="w-10 h-10 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mx-auto mb-4">
+                  <span className="text-emerald-400 text-lg">✓</span>
+                </div>
+                <p className="text-base font-semibold text-white mb-1">
+                  No major cost inefficiencies detected
+                </p>
+                <p className="text-sm text-gray-400 leading-relaxed max-w-md mx-auto">
+                  Your current AI tooling stack appears appropriately sized for
+                  your workflow and team structure. No plan changes are
+                  recommended at this time.
+                </p>
+              </div>
+            ) : (
+              <></>
+            )}
           </div>
         </div>
       </div>

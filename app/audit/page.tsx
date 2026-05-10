@@ -6,6 +6,7 @@ import Form from "@/components/form";
 import ToolCard, { ToolCardData } from "@/components/ToolCard";
 import { AuditData } from "@/constants/types";
 import { TOOL_NAMES, TOOL_CONFIG } from "@/constants/constants";
+import Link from "next/link";
 
 type ToolsMap = Record<string, ToolCardData>;
 
@@ -134,6 +135,16 @@ export default function Audit() {
             </div>
           </div>
         )}
+        <Link href="/audit/result">
+          <button
+            className="px-4 py-2 m-8 rounded-xl bg-white/20 border border-white/30
+            text-md font-light text-gray-200 backdrop-blur-md
+            hover:bg-yellow-500/50 hover:text-white
+            transition-all duration-300 shadow-lg"
+          >
+            Generate Audit Report
+          </button>
+        </Link>
       </main>
     </div>
   );

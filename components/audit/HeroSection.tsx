@@ -10,8 +10,8 @@ export default function HeroSection({ summary }: { summary: AuditSummary }) {
         : "Well Optimized Stack";
 
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/5 p-6 mb-6">
-      <p className="text-xs font-medium text-gray-500 uppercase tracking-widest mb-4">
+    <div className="rounded-2xl border border-white/30 bg-white/5 p-6 mb-6">
+      <p className="text-sm font-medium text-gray-300 uppercase tracking-widest mb-4">
         Audit Summary
       </p>
 
@@ -26,7 +26,7 @@ export default function HeroSection({ summary }: { summary: AuditSummary }) {
               isOptimized ? "text-gray-400" : "text-yellow-400"
             }`}
           >
-            {isOptimized ? "—" : `$${summary.totalMonthlySavings.toFixed(0)}`}
+            {isOptimized ? "-" : `$${summary.totalMonthlySavings.toFixed(0)}`}
           </p>
         </div>
 
@@ -40,7 +40,7 @@ export default function HeroSection({ summary }: { summary: AuditSummary }) {
               isOptimized ? "text-gray-400" : "text-white"
             }`}
           >
-            {isOptimized ? "—" : `$${summary.totalAnnualSavings.toFixed(0)}`}
+            {isOptimized ? "-" : `$${summary.totalAnnualSavings.toFixed(0)}`}
           </p>
         </div>
 

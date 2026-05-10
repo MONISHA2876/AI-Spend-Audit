@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import HeroSection from "@/components/audit/HeroSection";
 import AuditCard from "@/components/audit/AuditCard";
+import AISummary from "@/components/audit/AISummary";
 import { useEffect, useState } from "react";
 import { auditTools } from "@/components/audit/AuditLogic";
 import { AuditResult, AuditSummary, AuditData } from "@/constants/types";
@@ -108,6 +109,9 @@ export default function ResultPage() {
                 </div>
               </div>
             )}
+          </div>
+          <div className="w-full lg:w-72 xl:w-80 shrink-0">
+            <AISummary auditResults={summary.results} />
           </div>
         </div>
       </div>

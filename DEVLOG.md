@@ -55,3 +55,17 @@
 **Blockers / what I'm stuck on:** The API key integration was a massive headache today. Ran into quite a few tricky issues trying to get it working smoothly, which took up a good chunk of time.
 
 **Plan for tomorrow:** Build out the lead capture functionality and set up transactional emails.
+
+---
+
+## Day 5 — 2026-05-11
+
+**Hours worked:** 3
+
+**What I did:** Built the remaining landing page sections including features, how-it-works flow, and contact us. Focused mostly on keeping the UI visually consistent across the entire product. Also refined spacing, card layouts, and responsiveness to make the product feel more polished overall.
+
+**What I learned:** Learned how important visual consistency is in product design. Small differences in spacing, hover states, and typography can make the UI feel disconnected very quickly.
+
+**Blockers / what I'm stuck on:** Couldn't work for long today because I had to prepare for upcoming external practical examinations and also attended a college event earlier in the day.
+
+**Plan for tomorrow:** Finish the remaining backend-related features including lead capture storage, transactional email setup, and shareable public audit URLs. Also plan to deploy the first working production version.

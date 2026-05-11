@@ -13,6 +13,18 @@ export type ToolConfig = {
   plans: Plan[];
 };
 
+export type Feature = {
+  icon: string;
+  title: string;
+  description: string;
+};
+
+export type Step = {
+  number: string;
+  title: string;
+  description: string;
+};
+
 export type TeamType = "solo" | "small-team" | "mid-team" | "enterprise";
 
 export type AuditPlanConfig = {

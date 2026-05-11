@@ -38,21 +38,22 @@ export default function Header() {
             </>
           ))}
         </nav>
-
-        <button
-          className="px-4 py-2
-            rounded-xl
-            bg-white/10
-            border border-white/10
+        <Link href="/contact">
+          <button
+            className="px-4 py-2
+                rounded-xl
+                bg-white/10
+                border border-white/10
             text-sm font-medium text-gray-200
             backdrop-blur-md
             hover:bg-yellow-500/40
             hover:text-white
             transition-all duration-300
             shadow-lg"
-        >
-          Get In Touch
-        </button>
+          >
+            Get In Touch
+          </button>
+        </Link>
       </div>
     </header>
   );

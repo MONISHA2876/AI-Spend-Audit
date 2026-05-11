@@ -1,4 +1,4 @@
-import { ToolConfig, AuditToolConfig } from "@/constants/types";
+import { ToolConfig, AuditToolConfig, Feature, Step } from "@/constants/types";
 
 export const NAV_ITEMS: { href: string; label: string }[] = [
   { href: "/", label: "Home" },
@@ -7,6 +7,65 @@ export const NAV_ITEMS: { href: string; label: string }[] = [
   { href: "/how-it-works", label: "How It Works" },
   { href: "/testimonials", label: "Testimonials" },
   { href: "/faq", label: "FAQ" },
+];
+
+export const FEATURES: Feature[] = [
+  {
+    icon: "◈",
+    title: "AI Spend Analysis",
+    description:
+      "Break down your AI tooling costs by vendor, plan, and seat count.",
+  },
+  {
+    icon: "↓",
+    title: "Cost Optimization",
+    description:
+      "Get specific plan-level recommendations backed by current pricing data.",
+  },
+  {
+    icon: "⊹",
+    title: "Personalized AI Summary",
+    description:
+      "Receive an executive-ready summary of your stack's efficiency.",
+  },
+  {
+    icon: "⇪",
+    title: "Shareable Audit Reports",
+    description:
+      "Export and share results with finance or leadership in one click.",
+  },
+  {
+    icon: "◫",
+    title: "Team Spending Insights",
+    description: "See per-seat cost and identify where spend is concentrated.",
+  },
+  {
+    icon: "⌖",
+    title: "Smart Savings Detection",
+    description:
+      "Surface hidden savings from plan mismatches and unused tiers.",
+  },
+];
+
+export const STEPS: Step[] = [
+  {
+    number: "01",
+    title: "Add Your AI Tools",
+    description:
+      "Enter the AI tools your team uses, the plan, and number of seats.",
+  },
+  {
+    number: "02",
+    title: "Generate Audit",
+    description:
+      "Our engine evaluates your stack against current pricing and team fit.",
+  },
+  {
+    number: "03",
+    title: "Save Money",
+    description:
+      "Act on clear recommendations and capture your savings immediately.",
+  },
 ];
 
 export const severityConfig: Record<

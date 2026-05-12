@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import supabase from "@/lib/supabase";
 
 type FormData = {
   email: string;
@@ -9,7 +10,7 @@ type FormData = {
   teamSize: string;
 };
 
-type FormStatus = "idle" | "submitted";
+type FormStatus = "idle" | "loading" | "submitted" | "error";
 
 const TRUST_POINTS = [
   {
@@ -20,10 +21,7 @@ const TRUST_POINTS = [
     icon: "→",
     text: "Get plan-level recommendations backed by current vendor pricing.",
   },
-  {
-    icon: "→",
-    text: "No integrations required — just your tool list.",
-  },
+  { icon: "→", text: "No integrations required — just your tool list." },
 ];
 
 const TEAM_SIZE_OPTIONS = [
@@ -36,24 +34,23 @@ const TEAM_SIZE_OPTIONS = [
   { value: "200+", label: "200+" },
 ];
 
-const inputClass = `
-  w-full bg-[#0f0f0f] border border-white/10 rounded-xl px-4 py-3
-  text-sm text-gray-200 placeholder:text-gray-600
-  focus:outline-none focus:border-yellow-500/40 focus:bg-[#111111]
-  transition-all duration-200
-`.trim();
+const EMPTY_FORM: FormData = { email: "", company: "", role: "", teamSize: "" };
+
+const inputClass = [
+  "w-full bg-[#0f0f0f] border border-white/10 rounded-xl px-4 py-3",
+  "text-sm text-gray-200 placeholder:text-gray-600",
+  "focus:outline-none focus:border-yellow-500/40 focus:bg-[#111111]",
+  "transition-all duration-200",
+].join(" ");
 
 const labelClass = "block text-xs font-medium text-gray-500 mb-2 tracking-wide";
 
 export default function ContactPage() {
-  const [form, setForm] = useState<FormData>({
-    email: "",
-    company: "",
-    role: "",
-    teamSize: "",
-  });
-
+  const [form, setForm] = useState<FormData>(EMPTY_FORM);
   const [status, setStatus] = useState<FormStatus>("idle");
+  const [errorMsg, setErrorMsg] = useState("");
+  const [submittedEmail, setSubmittedEmail] = useState(""); // ← fix: alag state
+  const [honeypot, setHoneypot] = useState("");
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -61,15 +58,51 @@ export default function ContactPage() {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Lead captured:", form);
-    setStatus("submitted");
+
+    if (honeypot) return;
+
+    if (!form.email.trim()) {
+      setErrorMsg("Work email is required.");
+      return;
+    }
+
+    setStatus("loading");
+    setErrorMsg("");
+
+    try {
+      const payload = {
+        email: form.email.trim().toLowerCase(),
+        company: form.company.trim() || null,
+        role: form.role.trim() || null,
+        team_size: form.teamSize || null,
+      };
+
+      const { data, error } = await supabase
+        .from("leads")
+        .insert([payload])
+        .select()
+        .single();
+
+      if (error) throw error;
+
+      console.log("Lead inserted:", data);
+
+      setSubmittedEmail(form.email.trim().toLowerCase()); // ← save before reset
+      setStatus("submitted");
+      setForm(EMPTY_FORM);
+    } catch (err: unknown) {
+      console.error("Supabase insert error:", err);
+      setErrorMsg("Something went wrong. Please try again.");
+      setStatus("error");
+    }
   };
 
   return (
-    <div className=" bg-black text-gray-300 flex items-center justify-center px-4 py-16">
+    <div className="bg-black text-gray-300 flex items-center justify-center px-4 py-16">
       <div className="w-full max-w-5xl flex flex-col lg:flex-row gap-16 lg:gap-24 items-center lg:items-start">
+        {/* ── Left ── */}
         <div className="flex-1 max-w-md">
           <div className="flex items-center gap-2 mb-8">
             <span className="w-1.5 h-1.5 rounded-full bg-yellow-400" />
@@ -90,7 +123,6 @@ export default function ContactPage() {
             estimated savings.
           </p>
 
-          {/* Trust points */}
           <ul className="space-y-4">
             {TRUST_POINTS.map((point, i) => (
               <li key={i} className="flex items-start gap-3">
@@ -105,37 +137,30 @@ export default function ContactPage() {
           </ul>
         </div>
 
-        {/* ── Right: Form ── */}
-        <div className="w-full lg:w-105 shrink-0">
-          <div className="rounded-2xl border border-white/30 bg-[#0a0a0a] p-7 sm:p-8">
+        {/* ── Right: Form card ── */}
+        <div className="w-full lg:w-[420px] shrink-0">
+          <div className="rounded-2xl border border-white/10 bg-[#0a0a0a] p-7 sm:p-8">
             {status === "submitted" ? (
-              /* Success state */
               <div className="py-8 text-center">
-                <div
-                  className="w-10 h-10 rounded-full bg-yellow-400/10 border border-yellow-400/20
-                  flex items-center justify-center mx-auto mb-5"
-                >
+                <div className="w-10 h-10 rounded-full bg-yellow-400/10 border border-yellow-400/20 flex items-center justify-center mx-auto mb-5">
                   <span className="text-yellow-400 text-base">✓</span>
                 </div>
                 <p className="text-base font-semibold text-white mb-2">
                   You are on the list.
                 </p>
                 <p className="text-sm text-gray-500 leading-relaxed">
-                  We will send your full audit report to{" "}
-                  <span className="text-gray-300">{form.email}</span>.
+                  We will be in touch at{" "}
+                  <span className="text-gray-300">{submittedEmail}</span>.
+                  {/* ↑ form.email ki jagah submittedEmail use kiya */}
                 </p>
                 <button
-                  onClick={() => {
-                    setStatus("idle");
-                    setForm({ email: "", company: "", role: "", teamSize: "" });
-                  }}
+                  onClick={() => setStatus("idle")}
                   className="mt-6 text-xs text-gray-600 hover:text-gray-400 transition-colors duration-150 underline underline-offset-2"
                 >
                   Submit another
                 </button>
               </div>
             ) : (
-              /* Form */
               <>
                 <div className="mb-7">
                   <h2 className="text-base font-semibold text-white mb-1">
@@ -147,7 +172,18 @@ export default function ContactPage() {
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-5">
-                  {/* Work Email */}
+                  {/* Honeypot */}
+                  <div aria-hidden="true" className="hidden">
+                    <input
+                      type="text"
+                      name="website"
+                      value={honeypot}
+                      onChange={(e) => setHoneypot(e.target.value)}
+                      tabIndex={-1}
+                      autoComplete="off"
+                    />
+                  </div>
+
                   <div>
                     <label htmlFor="email" className={labelClass}>
                       Work Email <span className="text-yellow-600">*</span>
@@ -164,7 +200,6 @@ export default function ContactPage() {
                     />
                   </div>
 
-                  {/* Company */}
                   <div>
                     <label htmlFor="company" className={labelClass}>
                       Company Name
@@ -180,7 +215,6 @@ export default function ContactPage() {
                     />
                   </div>
 
-                  {/* Role */}
                   <div>
                     <label htmlFor="role" className={labelClass}>
                       Role / Job Title
@@ -196,7 +230,6 @@ export default function ContactPage() {
                     />
                   </div>
 
-                  {/* Team Size */}
                   <div>
                     <label htmlFor="teamSize" className={labelClass}>
                       Team Size
@@ -220,15 +253,29 @@ export default function ContactPage() {
                     </select>
                   </div>
 
-                  {/* Submit */}
+                  {status === "error" && errorMsg && (
+                    <p className="text-xs text-red-400 leading-relaxed">
+                      {errorMsg}
+                    </p>
+                  )}
+
                   <button
                     type="submit"
+                    disabled={status === "loading"}
                     className="w-full mt-2 py-3 px-4 rounded-xl bg-yellow-400 text-black
                       text-sm font-semibold tracking-wide
                       hover:bg-yellow-300 active:bg-yellow-500
-                      transition-colors duration-200"
+                      disabled:opacity-50 disabled:cursor-not-allowed
+                      transition-colors duration-200 flex items-center justify-center gap-2"
                   >
-                    Get Full Audit Report
+                    {status === "loading" ? (
+                      <>
+                        <span className="w-3.5 h-3.5 border-2 border-black/30 border-t-black rounded-full animate-spin" />
+                        Submitting...
+                      </>
+                    ) : (
+                      "Get Full Audit Report"
+                    )}
                   </button>
 
                   <p className="text-center text-xs text-gray-700 pt-1">

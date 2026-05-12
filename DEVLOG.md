@@ -2,7 +2,7 @@
 
 ---
 
-## Day 1 — 2026-05-07
+## Day 1 - 2026-05-07
 
 **Hours worked:** 0
 
@@ -16,7 +16,7 @@
 
 ---
 
-## Day 2 — 2026-05-08
+## Day 2 - 2026-05-08
 
 **Hours worked:** 1
 
@@ -30,7 +30,7 @@
 
 ---
 
-## Day 3 — 2026-05-09
+## Day 3 - 2026-05-09
 
 **Hours worked:** 5
 
@@ -44,7 +44,7 @@
 
 ---
 
-## Day 4 — 2026-05-10
+## Day 4 - 2026-05-10
 
 **Hours worked:** 6
 
@@ -58,7 +58,7 @@
 
 ---
 
-## Day 5 — 2026-05-11
+## Day 5 - 2026-05-11
 
 **Hours worked:** 3
 
@@ -69,3 +69,17 @@
 **Blockers / what I'm stuck on:** Couldn't work for long today because I had to prepare for upcoming external practical examinations and also attended a college event earlier in the day.
 
 **Plan for tomorrow:** Finish the remaining backend-related features including lead capture storage, transactional email setup, and shareable public audit URLs. Also plan to deploy the first working production version.
+
+---
+
+## Day 6 - 2026-05-12
+
+**Hours worked:** 3
+
+**What I did:** Spent most of the time today setting up Supabase for backend integration. Created and configured the project, explored the dashboard structure and planned out the database flow for storing lead capture data and audit information.
+
+**What I learned:** Learned how Supabase connects to frontend applications through the Supabase client. Also got a better understanding of hosted PostgreSQL workflows and table configuration.
+
+**Blockers / what I'm stuck on:** Didn't make much visible product progress today because most of the time went into understanding and configuring Supabase properly.
+
+**Plan for tomorrow:** Will try to complete the remaining backend functionality, connect the lead capture form to Supabase, set up transactional emails, deploy the project, and finish as much of the remaining documentation as possible alongside.

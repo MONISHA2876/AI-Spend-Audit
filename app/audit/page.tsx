@@ -13,6 +13,7 @@ type ToolsMap = Record<string, ToolCardData>;
 export default function Audit() {
   const [formData, setFormData] = useState<AuditData | null>(null);
   const [tools, setTools] = useState<ToolsMap>({});
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
     const savedForm = localStorage.getItem("audit-data");
@@ -31,6 +32,7 @@ export default function Audit() {
     const id = `tool-${Date.now()}`;
     const firstTool = TOOL_NAMES[0];
     const firstPlan = TOOL_CONFIG[firstTool].plans[0];
+    setShow(true);
     setTools((prev) => ({
       ...prev,
       [id]: {
@@ -66,7 +68,7 @@ export default function Audit() {
       <main className="flex-1 flex flex-col items-center text-center text-gray-300 pb-12">
         {/* (toolList.length > 0) ye bhi use kar sakte h yaha */}
 
-        {!formData ? (
+        {!show ? (
           <div className="flex flex-col items-center justify-center mt-8">
             <Image
               src="/robot.png"
